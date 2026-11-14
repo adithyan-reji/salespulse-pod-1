@@ -41,4 +41,4 @@ Best region: West
 
 6. RECOMMENDATIONS
 1. Keep Laptop well stocked.
-2. Apply West's practices to East.
+2. Apply West's practices to East.git branch
