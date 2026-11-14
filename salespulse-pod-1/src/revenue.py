@@ -1,33 +1,34 @@
-def analyse_revenue(valid_rows):
 
-    total_revenue = 0.0
-    total_orders = 0
-    total_quantity = 0
-    total_gross_profit = 0.0
+import pandas as pd
 
-    for r in valid_rows:
+def calculate_sales_metrics(valid_df):
 
-        quantity = r["Quantity"]
-        unit_price = r["UnitPrice"]
-        unit_cost = r["UnitCost"]
+    valid_df = valid_df.copy()
 
-        total_revenue += quantity * unit_price
+    valid_df["Revenue"] = (
+        valid_df["Quantity"] * valid_df["UnitPrice"]
+    )
 
-        total_orders += 1
+    valid_df["GrossProfit"] = (
+        valid_df["Quantity"] *
+        (valid_df["UnitPrice"] - valid_df["UnitCost"])
+    )
 
-        total_quantity += quantity
-
-        total_gross_profit += quantity * (unit_price - unit_cost)
+    total_revenue = valid_df["Revenue"].sum()
+    total_orders = len(valid_df)
+    total_quantity = valid_df["Quantity"].sum()
+    total_profit = valid_df["GrossProfit"].sum()
 
     if total_orders > 0:
         average_order_value = total_revenue / total_orders
     else:
-        average_order_value = 0.0
+        average_order_value = 0
 
-    return {
-        "total_revenue": round(total_revenue, 2),
-        "total_orders": total_orders,
-        "average_order_value": round(average_order_value, 2),
-        "total_quantity": total_quantity,
-        "total_gross_profit": round(total_gross_profit, 2)
-    }
+    print("\n--- OVERALL SALES METRICS ---")
+    print(f"Total Revenue: Rs. {total_revenue:,.2f}")
+    print(f"Total Valid Orders: {total_orders}")
+    print(f"Average Order Value: Rs. {average_order_value:,.2f}")
+    print(f"Total Quantity Sold: {total_quantity}")
+    print(f"Estimated Gross Profit: Rs. {total_profit:,.2f}")
+
+    return valid_df 

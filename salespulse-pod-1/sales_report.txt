@@ -1,7 +1,13 @@
-SALESPULSE SALES REPORT
+============================================================
+                  SALESPULSE SALES REPORT                   
+============================================================
 
-1. DATA QUALITY
-Total: 120  Valid: 108  Invalid: 12
+1. DATA QUALITY SUMMARY
+------------------------------------------------------------
+Total records     : 120
+Valid records     : 108
+Invalid records   : 12
+Reasons for exclusion (a record can be counted once per reason):
   - Zero or negative Quantity: 2
   - Duplicate Order ID: 4
   - Zero or negative UnitPrice: 2
@@ -9,36 +15,48 @@ Total: 120  Valid: 108  Invalid: 12
   - Missing Region: 1
   - Negative UnitCost: 1
   - Missing Order ID: 1
-Loss-making valid orders (kept): 0
+Note: all rows sharing a duplicated Order ID are excluded.
+Loss-making valid orders (UnitCost > UnitPrice, kept): 0
 
-2. OVERALL METRICS
-Revenue: 2,347,050.00
-Valid orders: 108
-AOV: 21,731.94
-Quantity sold: 401
-Gross profit: 534,850.00
+2. OVERALL SALES METRICS
+------------------------------------------------------------
+Total Revenue          : Rs. 2,347,050.00
+Total Valid Orders     : 108
+Average Order Value    : Rs. 21,731.94
+Total Quantity Sold    : 401
+Est. Gross Profit      : Rs. 534,850.00
+Gross Profit Margin    : 22.79%
 
-3. TOP 5 PRODUCTS
-1. Laptop: 1,143,000.00
-2. Monitor: 264,100.00
-3. Office Chair: 217,700.00
-4. External SSD: 191,600.00
-5. Mechanical Keyboard: 168,100.00
-Highest quantity: {'products': ['Mechanical Keyboard'], 'quantity': 60.0}
+3. TOP 5 PRODUCTS BY REVENUE
+------------------------------------------------------------
+1. Laptop                 Rs. 1,143,000.00
+2. Monitor                Rs. 264,100.00
+3. Office Chair           Rs. 217,700.00
+4. External SSD           Rs. 191,600.00
+5. Mechanical Keyboard    Rs. 168,100.00
 
-4. REGIONS
-West: revenue 651,350.00, profit 146,100.00, orders 28
-North: revenue 595,900.00, profit 130,050.00, orders 27
-South: revenue 568,000.00, profit 145,100.00, orders 30
-East: revenue 531,800.00, profit 113,600.00, orders 23
-Best region: West
+Highest quantity sold: Mechanical Keyboard (60 units)
 
-5. INSIGHTS
-1. Laptop earns 48.7% of total revenue.
-2. Mechanical Keyboard sells the most units but is not the top earner.
-3. West is the best region; East is the weakest.
-4. Gross profit margin is 22.79%.
+4. REGION-WISE PERFORMANCE
+------------------------------------------------------------
+Region             Revenue    Gross Profit   Orders
+West            651,350.00      146,100.00       28
+North           595,900.00      130,050.00       27
+South           568,000.00      145,100.00       30
+East            531,800.00      113,600.00       23
 
-6. RECOMMENDATIONS
-1. Keep Laptop well stocked.
-2. Apply West's practices to East.git branch
+Best region (by revenue): West
+
+5. BUSINESS INSIGHTS
+------------------------------------------------------------
+1. Laptop is the top product with Rs. 1,143,000.00, 48.7% of total revenue.
+2. The top 5 products together make up 84.6% of revenue.
+3. Mechanical Keyboard sells the most units (60) but ranks #5 by revenue.
+4. West leads regional revenue (27.8% share); East is lowest with Rs. 531,800.00.
+5. South has the most orders (30) but is not the top region by revenue, so its order value is lower.
+6. Overall gross profit margin is 22.79%.
+
+6. RECOMMENDATIONS FOR THE STORE MANAGER
+------------------------------------------------------------
+1. Keep Laptop well stocked, since it alone drives 48.7% of revenue.
+2. Study what works in West (pricing, promotions) and apply it in East, the weakest region.

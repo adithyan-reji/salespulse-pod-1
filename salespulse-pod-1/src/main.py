@@ -1,9 +1,8 @@
 from pathlib import Path
-
 import pandas as pd
 
 from validation import validate_sales
-from revenue import analyse_revenue
+from revenue import calculate_sales_metrics
 from product_analysis import analyse_products
 from region_analysis import analyse_regions
 
@@ -153,22 +152,44 @@ def main():
 
     valid, invalid, summary = validate_sales(data)
 
-    # Keep the excluded records for transparency
     valid.to_csv(BASE_DIR / "valid_sales.csv", index=False)
     invalid.to_csv(BASE_DIR / "invalid_sales.csv", index=False)
 
+    valid = calculate_sales_metrics(valid)
+
+    total_revenue = valid["Revenue"].sum()
+    total_orders = len(valid)
+    total_quantity = valid["Quantity"].sum()
+    total_profit = valid["GrossProfit"].sum()
+
+    average_order_value = (
+        total_revenue / total_orders if total_orders > 0 else 0
+    )
+
+    revenue = {
+        "total_revenue": total_revenue,
+        "total_orders": total_orders,
+        "average_order_value": average_order_value,
+        "total_quantity": total_quantity,
+        "total_gross_profit": total_profit
+    }
+
     rows = valid.to_dict("records")
-    revenue = analyse_revenue(rows)
+
     products = analyse_products(rows)
     regions = analyse_regions(rows)
 
-    # Loss-making orders are kept in the analysis but flagged
-    loss_rows = [r for r in rows if r["UnitCost"] > r["UnitPrice"]]
+    loss_rows = [
+        r for r in rows
+        if r["UnitCost"] > r["UnitPrice"]
+    ]
 
     report = build_report(summary, revenue, products, regions, loss_rows)
+
     print(report)
 
     REPORT_FILE.write_text(report, encoding="utf-8")
+
     print("SalesPulse Analysis Completed!")
     print(f"Report saved as {REPORT_FILE.name}")
 
